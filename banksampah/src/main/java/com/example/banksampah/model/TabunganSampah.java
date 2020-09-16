@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 import java.util.Date;
 
@@ -17,8 +19,13 @@ public class TabunganSampah {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
 
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Long nomor_rekening;
+  @ManyToOne
+  @JoinColumn(name = "id_nasabah", referencedColumnName= "id_nasabah",insertable = false, updatable = false)
+  private Nasabah nasabah;
+  private Long id_nasabah;
+
+  @Column(name= "JenisSampah")
+  private String jenis_sampah;
 
   @Column(name= "JumlahSampah")
   private Integer jumlah_sampah;
@@ -32,13 +39,36 @@ public class TabunganSampah {
   @Column(name= "TanggalTransaksi")
   private Date tanggal_transaksi;
 
- 
-  public Long getNomor_rekening() {
-    return nomor_rekening;
+  public Long getId() {
+    return id;
   }
 
-  public void setNomor_rekening(Long nomor_rekening) {
-    this.nomor_rekening = nomor_rekening;
+  public void setId(Long id) {
+    this.id = id;
+  }
+ 
+  public Nasabah getNasabah() {
+    return nasabah;
+  }
+
+  public void setNasabah(Nasabah nasabah) {
+    this.nasabah = nasabah;
+  }
+
+  public Long getId_nasabah() {
+    return id_nasabah;
+  }
+
+  public void setId_nasabah(Long id_nasabah) {
+    this.id_nasabah = id_nasabah;
+  }
+
+  public String getJenis_sampah() {
+    return jenis_sampah;
+  }
+
+  public void setJenis_sampah(String jenis_sampah) {
+    this.jenis_sampah = jenis_sampah;
   }
 
   public Integer getJumlah_sampah() {
@@ -72,4 +102,5 @@ public class TabunganSampah {
   public void setTanggal_transaksi(Date tanggal_transaksi) {
     this.tanggal_transaksi = tanggal_transaksi;
   }
+
 }

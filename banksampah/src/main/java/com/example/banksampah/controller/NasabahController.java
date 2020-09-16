@@ -30,17 +30,16 @@ public class NasabahController {
     }
 
     @GetMapping("/{id}")
-    Nasabah userById(@PathVariable Long id_nasabah) {
-      return nasabahRepository.findById(id_nasabah).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    Nasabah userById(@PathVariable Long id) {
+      return nasabahRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
     @PostMapping("/save") 
     Nasabah save(@RequestBody Nasabah nasabah){
         return nasabahRepository.save(nasabah);
     }
     @PutMapping("/{id}")
-    Nasabah updatenasabah(@RequestBody Nasabah newUser, @PathVariable Long id_nasabah) {
-      
-      return nasabahRepository.findById(id_nasabah)
+    Nasabah updatenasabah(@RequestBody Nasabah newUser, @PathVariable Long id) {
+      return nasabahRepository.findById(id)
      .map(nasabah ->{
         nasabah.setNama_nasabah(newUser.getNama_nasabah());
         nasabah.setAlamat(newUser.getAlamat());
@@ -51,13 +50,13 @@ public class NasabahController {
 
       })
       .orElseGet(() -> {
-         newUser.setId(id_nasabah);
+         newUser.setId_nasabah(id);
         return nasabahRepository.save(newUser);
       });
       }
 
       @DeleteMapping("/{id}")
-      public void deleteNasabah(@PathVariable Long id){
+      public void deletenasabah(@PathVariable Long id){
         nasabahRepository.deleteById(id);
       }
     }

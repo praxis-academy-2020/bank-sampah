@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface TabunganSampahRepository extends JpaRepository<TabunganSampah, Long>{
-    Optional<TabunganSampah> findByNomorRekening(Long nomor_rekening);
+    // Optional<TabunganSampah> findByNomorRekening(Long nomor_rekening);
 }

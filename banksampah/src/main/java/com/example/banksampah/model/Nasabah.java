@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+
 
 @Entity
 @Table(name="nasabah")
@@ -14,6 +17,12 @@ public class Nasabah {
   @GeneratedValue
   private Long id_nasabah;
 
+  @ManyToOne
+  @JoinColumn(name = "id_pegawai", referencedColumnName= "id_pegawai",insertable = false, updatable = false)
+  private Pegawai pegawai;
+  private Long id_pegawai;
+
+  
   @Column(name= "NamaNasabah")
   private String nama_nasabah;
 
@@ -27,14 +36,30 @@ public class Nasabah {
   private String email;
 
   @Column(name= "NomorRekening")
-  private Long nomor_rekening;
+  private Integer nomor_rekening;
 
-  public Long getIdNasabah() {
+  public Long getId_nasabah() {
     return id_nasabah;
   }
 
-  public void setId(Long id_nasabah) {
+  public void setId_nasabah(Long id_nasabah) {
     this.id_nasabah = id_nasabah;
+  }
+
+  public Pegawai getPegawai() {
+    return pegawai;
+  }
+
+  public void setPegawai(Pegawai pegawai) {
+    this.pegawai = pegawai;
+  }
+
+  public Long getId_pegawai() {
+    return id_pegawai;
+  }
+
+  public void setId_pegawai(Long id_pegawai) {
+    this.id_pegawai = id_pegawai;
   }
 
   public String getNama_nasabah() {
@@ -69,11 +94,11 @@ public class Nasabah {
     this.email = email;
   }
 
-  public Long getNomor_rekening() {
+  public Integer getNomor_rekening() {
     return nomor_rekening;
   }
 
-  public void setNomor_rekening(Long nomor_rekening) {
+  public void setNomor_rekening(Integer nomor_rekening) {
     this.nomor_rekening = nomor_rekening;
   }
 }

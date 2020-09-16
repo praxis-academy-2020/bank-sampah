@@ -35,8 +35,8 @@ public class TabunganSampahController {
     }
 
     @GetMapping("/{id}")
-    TabunganSampah getByNomor_rekening(@PathVariable ("id") Long nomor_rekening) {
-      return tabungansampahRepository.findByNomorRekening(nomor_rekening).get();
+    TabunganSampah userById(@PathVariable Long id) {
+      return tabungansampahRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/save") 
@@ -44,19 +44,23 @@ public class TabunganSampahController {
         return tabungansampahRepository.save(tabungansampah);
     }
     @PutMapping("/{id}")
-    TabunganSampah update(@RequestBody TabunganSampah newTabunganSampah, @PathVariable ("id") Long nomor_rekening) {
-      TabunganSampah tabungansampah = tabungansampahRepository.findByNomorRekening(nomor_rekening).get();
-        tabungansampah.setNomor_rekening(newTabunganSampah.getNomor_rekening());
-        tabungansampah.setJumlah_sampah(newTabunganSampah.getJumlah_sampah());
-        tabungansampah.setSaldo_debit(newTabunganSampah.getSaldo_debit());
-        tabungansampah.setSaldo_kredit(newTabunganSampah.getSaldo_kredit());
-        tabungansampah.setTanggal_transaksi(newTabunganSampah.getTanggal_transaksi());
+    TabunganSampah update(@RequestBody TabunganSampah newUser, @PathVariable Long id) {
+      return tabungansampahRepository.findById(id)
+      .map(tabungansampah ->{
+        tabungansampah.setJenis_sampah(newUser.getJenis_sampah());
+        tabungansampah.setJumlah_sampah(newUser.getJumlah_sampah());
+        tabungansampah.setSaldo_debit(newUser.getSaldo_debit());
+        tabungansampah.setSaldo_kredit(newUser.getSaldo_kredit());
+        tabungansampah.setTanggal_transaksi(newUser.getTanggal_transaksi());
         return tabungansampahRepository.save(tabungansampah);
-      }
-
+    })
+    .orElseGet(() -> {
+       newUser.setId(id);
+      return tabungansampahRepository.save(newUser);
+    });
+    }
       @DeleteMapping("/{id}")
-      public void deleteTabunganSampah(@PathVariable ("id") Long nomor_rekening){
-      TabunganSampah tabungansampah = tabungansampahRepository.findByNomorRekening(nomor_rekening).get();
-        tabungansampahRepository.delete(tabungansampah);
+      public void deleteTabunganSampah(@PathVariable Long id){
+        tabungansampahRepository.deleteById(id);
       }
   }

@@ -30,30 +30,34 @@ public class PegawaiController {
     }
 
     @GetMapping("/{id}")
-    Pegawai userById(@PathVariable Long id_pegawai) {
-      return pegawaiRepository.findById(id_pegawai).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    Pegawai userById(@PathVariable Long id) {
+      return pegawaiRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
+    
     @PostMapping("/save") 
     Pegawai save(@RequestBody Pegawai pegawai){
         return pegawaiRepository.save(pegawai);
     }
 
     @PutMapping("/{id}")
-    Pegawai updatepegawai(@RequestBody Pegawai newUser, @PathVariable Long id_pegawai) {
-      return pegawaiRepository.findById(id_pegawai)
+    Pegawai updatepegawai(@RequestBody Pegawai newUser, @PathVariable Long id) {
+      return pegawaiRepository.findById(id)
         .map(pegawai ->{
         pegawai.setNama_pegawai(newUser.getNama_pegawai());
+        pegawai.setAlamat(newUser.getAlamat());
+        pegawai.setNomor_telpon(newUser.getNomor_telpon());
+        pegawai.setEmail(newUser.getEmail());
         return pegawaiRepository.save(pegawai);
 
       })
       .orElseGet(() -> {
-         newUser.setIdPegawai(id_pegawai);
+         newUser.setId_pegawai(id);
         return pegawaiRepository.save(newUser);
       });
       }
 
       @DeleteMapping("/{id}")
-      public void deletePegawai(@PathVariable Long id){
+      public void deletepegawai(@PathVariable Long id){
         pegawaiRepository.deleteById(id);
       }
     }
